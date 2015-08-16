@@ -6,7 +6,9 @@
 
 namespace derhasi\buddy;
 
+use derhasi\buddy\Config\BuddySchema;
 use derhasi\buddy\Config\YamlLoader;
+use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
 
 /**
@@ -29,9 +31,16 @@ class Config {
     $locator = new FileLocator($this->getPotentialDirectories($workingDir));
     $loader = new YamlLoader($locator);
 
+    // Config validation.
+    $processor = new Processor();
+    $schema = new BuddySchema();
+
     $files = $locator->locate(static::FILENAME, NULL, FALSE);
     foreach ($files as $file) {
-      $conf = $loader->load($file);
+      // After loading the raw data from the yaml file, we validate given
+      // configuration.
+      $raw = $loader->load($file);
+      $conf = $processor->processConfiguration($schema, array('buddy' => $raw));
       if (isset($conf['commands'])) {
         foreach($conf['commands'] as $command => $specs) {
           if (!isset($this->commands[$command])) {
