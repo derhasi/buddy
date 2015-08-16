@@ -6,6 +6,7 @@
 
 namespace derhasi\buddy\Command;
 
+use derhasi\buddy\Config;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,7 +17,8 @@ class Buddy extends Command {
   /**
    * {@inheritdoc}
    */
-  protected function configure() {
+  protected function configure()
+  {
     $this
       ->setName('buddy')
       ->setDescription('Locates and runs a commandline tool')
@@ -30,9 +32,15 @@ class Buddy extends Command {
   /**
    * {@inheritdoc}
    */
-  protected function execute(InputInterface $input, OutputInterface $output) {
-    $output->write('Yeha!');
+  protected function execute(InputInterface $input, OutputInterface $output)
+  {
+
+    // Locate
+    $config = new Config();
+    $config->load(getcwd());
+
+    $command = $input->getArgument('command');
+    $config->getCommand($command)
+      ->execute('');
   }
-
-
 }
