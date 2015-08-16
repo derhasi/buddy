@@ -1,0 +1,16 @@
+{
+    "name": "derhasi/buddy",
+    "description": "Command line tool for locating command line tools in a parent or project scope",
+    "type": "cli",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Johannes Haseitl",
+            "email": "johannes@undpaul.de"
+        }
+    ],
+    "require": {
+        "symfony/console": "^2.6.0",
+        "symfony/yaml": "^2.6.0"
+    }
+}
