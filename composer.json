@@ -10,6 +10,7 @@
         }
     ],
     "bin": [
+        "b",
         "buddy"
     ],
     "autoload": {
