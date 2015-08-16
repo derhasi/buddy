@@ -44,14 +44,14 @@ class CommandShortcut {
   public function execute($arguments)
   {
     // Validate on given command.
-    if (!isset($this->options['command'])) {
+    if (!isset($this->options['cmd'])) {
       throw new \Exception(sprintf('No command given for "%s"', $this->name));
       exit(1);
     }
 
     // Execute the command.
     $status = NULL;
-    $cmd = $this->options['command'];
+    $cmd = $this->options['cmd'];
     foreach ($arguments as $arg) {
       $cmd .= ' ' . escapeshellarg($arg);
     }

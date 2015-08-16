@@ -7,17 +7,20 @@ A command line tool to help you execute a command in the direct location
 ```
 buddy composer
 buddy drush
+b drush # Alternate shortcut
 ```
 
 ## Example .buddy.yml
 
 ```yml
-composer:
-  mode: global
-  cwd: true
-drush:
-  cmd: vendor/bin/drush
-  defaults:
-    uri: http://example.com
-    root: {{DIR}}/docroot
+commands:
+  composer:
+    cmd: composer
+    #cwd: true
+  drush:
+    cmd: vendor/bin/drush
+    #defaults:
+    #  uri: http://example.com
+    #  root: {{DIR}}/docroot
+root: false
 ```
