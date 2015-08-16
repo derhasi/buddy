@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+// Autoload composer components.
+require __DIR__ . '/autoload.php';
+
+$app = new \derhasi\buddy\Application();
+$app->run();
