@@ -26,7 +26,16 @@ class Buddy extends Command {
         'command',
         InputArgument::REQUIRED,
         'The command shortcut for the command to call, as specified in your .buddy.yml'
-    ) ;
+      )
+      ->addArgument(
+        'arguments',
+        InputArgument::IS_ARRAY,
+        'The command shortcut for the command to call, as specified in your .buddy.yml'
+      )
+    ;
+    // We disable validation, so we can grab all options and arguments from the
+    // input.
+    $this->ignoreValidationErrors();
   }
 
   /**
@@ -39,8 +48,16 @@ class Buddy extends Command {
     $config = new Config();
     $config->load(getcwd());
 
-    $command = $input->getArgument('command');
+    // We need to use $argv directly, as otherwise we cannot retrieve all
+    // arguments and options.
+    global $argv;
+
+    $arguments = $argv;
+    // The first is the command itself.
+    array_shift($arguments);
+    $command = array_shift($arguments);
+
     $config->getCommand($command)
-      ->execute('');
+      ->execute($arguments);
   }
 }

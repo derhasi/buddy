@@ -36,25 +36,26 @@ class CommandShortcut {
   /**
    * Runs the given command.
    *
-   * @param string $arguments
-   *   Passed arguments and options as strings.
+   * @param array $arguments
+   *   Array of arguments and options to pass to the command.
+   *
+   * @throws \Exception
    */
   public function execute($arguments)
   {
     // Validate on given command.
     if (!isset($this->options['command'])) {
       throw new \Exception(sprintf('No command given for "%s"', $this->name));
+      exit(1);
     }
-
 
     // Execute the command.
     $status = NULL;
-    if (strlen($arguments) > 0) {
-      passthru(sprintf('%s %s', $this->options['command'], $arguments), $status);
+    $cmd = $this->options['command'];
+    foreach ($arguments as $arg) {
+      $cmd .= ' ' . escapeshellarg($arg);
     }
-    else {
-      passthru(sprintf('%s', $this->options['command']), $status);
-    }
+    passthru(escapeshellcmd($cmd), $status);
     exit($status);
   }
 }
