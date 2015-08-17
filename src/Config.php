@@ -44,7 +44,10 @@ class Config {
       if (isset($conf['commands'])) {
         foreach($conf['commands'] as $command => $specs) {
           if (!isset($this->commands[$command])) {
-            $this->commands[$command] = $specs;
+            $this->commands[$command] = array(
+              'options' => $specs,
+              'file' => $file,
+            );
           }
         }
       }
@@ -82,7 +85,7 @@ class Config {
    */
   public function getCommand($command)
   {
-    return new CommandShortcut($command, $this->commands[$command]);
+    return new CommandShortcut($command, $this->commands[$command]['options'], $this->commands[$command]['file']);
   }
 
   /**
@@ -101,5 +104,4 @@ class Config {
     }
     return $paths;
   }
-
 }

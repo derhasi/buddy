@@ -29,6 +29,7 @@ class BuddySchema implements ConfigurationInterface {
           ->prototype('array')
           ->children()
             ->scalarNode('cmd')->end()
+            ->scalarNode('workingDir')->end()
           ->end()
           ->end()
         ->end()
