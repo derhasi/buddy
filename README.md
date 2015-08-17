@@ -58,3 +58,18 @@ value:
 
 * `$CWD`: Current working directory
 * `$DIR`: Directory of the .buddy.yml file hlding the command configuration
+
+## Installation
+
+After [installing composer](https://getcomposer.org/doc/00-intro.md) you can
+install the command globally:
+
+* Run `composer global require derhasi/buddy:dev-master` to install globally.
+* Make sure `~/.composer/vendor/bin` is part of your `$PATH`, e.g. by adding
+  `export PATH=~/.composer/vendor/bin:$PATH` to your `.bashrc`or `.profile`
+
+## Support
+
+Please post an issue in the [issue queue](https://github.com/derhasi/buddy/issues)
+in the case you need support or detect any errors. [Pull requests](https://help.github.com/articles/using-pull-requests/)
+are welcome too.
