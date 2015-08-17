@@ -17,13 +17,16 @@ or any parent folder.
 
 ```yml
 commands:
+  # calls the global composer command from the root folder
   composer:
     cmd: composer
     workingDir: $DIR
+  # Calls a local drush command in ./vendor/bin/drush
   drush:
-    cmd: vendor/bin/drush
+    cmd: drush
+    cmdDir: $DIR/vendor/bin
     workingDir: $DIR
-    #defaults:
+    #defaults: # not implemented yet
     #  uri: http://example.com
     #  root: $DIR/docroot
 root: false
@@ -42,8 +45,10 @@ parent folders with the same name.
 
 ### Command options
 
-* `cmd`: mandatory name of the cli command to call
-* `workingDir`: Location from where to call the given command. Defaults to the
+* `cmd` (required): the actual cli command to call
+* `cmdDir` (optional): directory the command is located in. When the directory
+  is not given, global commands can be executed.
+* `workingDir` (optional): Location from where to call the given command. Defaults to the
   current working directory.
 
 ### Replacement patterns

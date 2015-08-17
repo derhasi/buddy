@@ -6,6 +6,7 @@
 
 namespace derhasi\buddy;
 
+use Webmozart\PathUtil\Path;
 
 class CommandShortcut {
 
@@ -67,6 +68,14 @@ class CommandShortcut {
     // Execute the command.
     $status = NULL;
     $cmd = $this->options['cmd'];
+
+    // If a explicit command dir is given, we use an absolute path to the command.
+    $cmdDir = $this->getCmdDir();
+    if (isset($cmdDir)) {
+      $cmd = $cmdDir . '/' . $cmd;
+    }
+
+    // Add passed arguments to the command.
     foreach ($arguments as $arg) {
       $cmd .= ' ' . escapeshellarg($arg);
     }
@@ -81,7 +90,36 @@ class CommandShortcut {
     if (!isset($this->options['workingDir'])) {
       return;
     }
-    return $this->replacePattern($this->options['workingDir']);
+    return $this->processDir($this->options['workingDir']);
+  }
+
+  /**
+   * Helper to retrieve command directory.
+   *
+   * @return string|void
+   */
+  protected function getCmdDir() {
+    if (!isset($this->options['cmdDir'])) {
+      return;
+    }
+    return $this->processDir($this->options['cmdDir']);
+  }
+
+  /**
+   * Process given dir with replacements and makes it absolute.
+   *
+   * @param string $dir
+   *
+   * @return string
+   *   Absolute path with placeholders replaced.
+   */
+  protected function processDir($dir) {
+    $dir = $this->replacePattern($dir);
+    // The absolute path has to be calculated relative to the configuration file
+    if (Path::isRelative($dir)) {
+      $dir = Path::makeAbsolute($dir, dirname($this->configFile));
+    }
+    return rtrim($dir, '/');
   }
 
   /**
