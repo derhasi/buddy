@@ -74,12 +74,13 @@ class CommandShortcut {
     if (isset($cmdDir)) {
       $cmd = $cmdDir . '/' . $cmd;
     }
+    $cmd = escapeshellcmd($cmd);
 
     // Add passed arguments to the command.
     foreach ($arguments as $arg) {
       $cmd .= ' ' . escapeshellarg($arg);
     }
-    passthru(escapeshellcmd($cmd), $status);
+    passthru($cmd, $status);
     exit($status);
   }
 
