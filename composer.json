@@ -2,7 +2,7 @@
     "name": "derhasi/buddy",
     "description": "Command line tool for locating command line tools in a parent or project scope",
     "type": "cli",
-    "license": "GPLv3",
+    "license": "GPL-3.0-only",
     "authors": [
         {
             "name": "Johannes Haseitl",
